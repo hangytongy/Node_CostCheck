@@ -19,8 +19,9 @@ def run_ansible_playbook(playbook_path, inventory_path):
         print("An error occurred while executing the playbook.")
         print("STDOUT:", e.stdout)
         print("STDERR:", e.stderr)
+    retrun result.stdout
 
 # Example usage
 playbook_path = 'quil_query.yml'
 inventory_path = 'hosts'
-run_ansible_playbook(playbook_path, inventory_path)
+result = run_ansible_playbook(playbook_path, inventory_path)
