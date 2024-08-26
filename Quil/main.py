@@ -1,6 +1,9 @@
 import subprocess
 
 def run_ansible_playbook(playbook_path, inventory_path):
+    
+    os.environ['ANSIBLE_HOST_KEY_CHECKING'] = 'False'
+    
     try:
         result = subprocess.run(
             ['ansible-playbook', '-i', inventory_path, playbook_path],
