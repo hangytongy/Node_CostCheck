@@ -1,0 +1,40 @@
+---
+- name: Run node-info command and save version and unclaimed balance
+  hosts: nodes
+  gather_facts: no
+  become: true  # Use sudo privileges if necessary
+
+  tasks:
+
+    - name: Run the node-info command
+      shell: "cd ~/ceremonyclient/node && ./node-1.4.21.1-linux-amd64 -node-info"
+      register: node_info_output
+
+    - name: Parse the node-info output to extract Version and Unclaimed balance
+      set_fact:
+        version: "{{ node_info_output.stdout | regex_search('Version: (.+)', '\\1') }}"
+        unclaimed_balance: "{{ node_info_output.stdout | regex_search('Unclaimed balance: (.+)', '\\1')}}"
+
+    - name: Display Version and Unclaimed Balance
+      debug:
+        msg: 
+          - "Version: {{ version }}"
+          - "Unclaimed Balance: {{ unclaimed_balance }}"
+
+    - name: Create a JSON file with Version and Unclaimed balance
+      copy:
+        content: |
+          {
+            "version": "{{ version }}",
+            "unclaimed_balance": {{ unclaimed_balance }}
+          }
+        dest: "./node_info.json"
+        
+    - name: Confirm the JSON file was created
+      stat:
+        path: "./node_info.json"
+      register: file_stat
+
+    - name: Display the file creation status
+      debug:
+        msg: "File was created: {{ file_stat.stat.exists }}"
