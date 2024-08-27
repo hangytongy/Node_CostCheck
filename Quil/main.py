@@ -26,6 +26,7 @@ def run_ansible_playbook(playbook_path, inventory_path):
     return result.stdout
 
 def run_script():
+    current_time = int(datetime.now().timestamp())
     # Example usage
     playbook_path = 'quil_query.yml'
     inventory_path = 'hosts'
@@ -58,7 +59,7 @@ def run_script():
                 balance.append(float(bal))
 
     data = { 'version' : version, 'balance' : balance }
-    data['date'] = datetime.now().strftime("%Y-%m-%d")
+    data['date'] = current_time
     df = pd.DataFrame(data)
 
     #get quil price
