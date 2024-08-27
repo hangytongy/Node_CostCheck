@@ -14,7 +14,7 @@ def plot_df():
   df = pd.read_csv(file_path)
 
   if len(df) <=1 :
-    return False
+    return None
 
   else:
 
