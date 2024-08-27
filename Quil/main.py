@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import pandas as pd
 from datetime import datetime
+import requests
 
 def run_ansible_playbook(playbook_path, inventory_path):
 
@@ -58,6 +59,12 @@ with open(file_path, 'r') as file:
 data = { 'version' : version, 'balance' : balance }
 data['date'] = datetime.now().strftime("%Y-%m-%d")
 df = pd.DataFrame(data)
+
+#get quil price
+url = "https://api.cryptorank.io/v0/tickers?isTickersForPriceCalc=true&limit=1&coinKeys=quilibrium"
+response = requests.get(url)
+quil_price = float(response.json()['data'][0]['usdLast'])
+df['quil_price'] = quil_price
 
 print(df)
 
