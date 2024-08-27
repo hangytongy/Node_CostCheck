@@ -1,0 +1,20 @@
+
+PLAY [Run node-info command and save version and unclaimed balance] ************
+
+TASK [Run the node-info command] ***********************************************
+changed: [node1]
+
+TASK [Parse the node-info output to extract Version and Unclaimed balance] *****
+ok: [node1]
+
+TASK [Display Version and Unclaimed Balance] ***********************************
+ok: [node1] => {
+    "msg": [
+        "Version: ['1.4.21-p1']",
+        "Unclaimed Balance: ['45.676500000000 QUIL']"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+node1                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
