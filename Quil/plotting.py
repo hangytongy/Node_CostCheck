@@ -38,7 +38,7 @@ def plot_df():
     ax1.plot(df['time'], df['quil_profit'], color='r', marker='o', label='quil profit')
     ax1.plot(df['time'], df['server_cost'], color='g', label='server cost')
     ax1.set_xlabel('Time')
-    ax1.set_ylabel('Balance')
+    ax1.set_ylabel('$ Earning/Cost')
 
     # Secondary axis for quil price
     ax2 = ax1.twinx()
