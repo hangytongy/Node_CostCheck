@@ -18,4 +18,4 @@ if __name__ == "__main__":
             pass
         else:
             send_photo_telegram(file,f"Quil Mining Profitability updated {now}")
-        time.sleep(60)
+        time.sleep(43200)
