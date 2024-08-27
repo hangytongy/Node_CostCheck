@@ -13,5 +13,9 @@ if __name__ == "__main__":
         time.sleep(5)
         file = plotting.plot_df()
         print("plotted")
-        send_photo_telegram(file,f"Quil Mining Profitability updated {now}")
+
+        if file == None:
+            pass
+        else:
+            send_photo_telegram(file,f"Quil Mining Profitability updated {now}")
         time.sleep(60)
