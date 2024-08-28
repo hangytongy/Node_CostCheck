@@ -22,23 +22,26 @@ def plot_df():
     df['time'] = pd.to_datetime(df['date'], unit = 's')
   
     #get server price
-    server_price = 10/(30*24*60)
+    server_price = 7.5/(30*24*60)
   
     df['quil_earned'] = df['balance'].diff()
     df['quil_profit'] = df['quil_earned']*df['quil_price']
     df['time_delta'] = df['time'].diff().dt.total_seconds() / 60
+    df['quil_profit_permin'] = df['quil_profit']/df['time_delta']
+    df['quil_earned_permin'] = df['quil_earned']/df['time_delta']
     df['server_cost'] = server_price* df['time_delta']
+    df['server_cost_permin'] = server_price
   
     # Generate Chart
     plt.figure(figsize=(12,6))
     fig, ax1 = plt.subplots(figsize=(12,6))
 
     # Primary axis
-    ax1.plot(df['time'], df['quil_earned'], linestyle='-', marker='s', color='b', label='quil earned')
-    ax1.plot(df['time'], df['quil_profit'], color='r', marker='o', label='quil profit')
-    ax1.plot(df['time'], df['server_cost'], color='g', label='server cost')
+    ax1.plot(df['time'], df['quil_earned_permin'], linestyle='-', marker='s', color='b', label='quil earned')
+    ax1.plot(df['time'], df['quil_profit_permin'], color='r', marker='o', label='quil profit')
+    ax1.plot(df['time'], df['server_cost_permin'], color='g', label='server cost')
     ax1.set_xlabel('Time')
-    ax1.set_ylabel('Balance')
+    ax1.set_ylabel('$ Earning/Cost per minute')
 
     # Secondary axis for quil price
     ax2 = ax1.twinx()
