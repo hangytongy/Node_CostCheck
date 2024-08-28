@@ -31,15 +31,19 @@ def plot_df():
     df['quil_earned_permin'] = df['quil_earned']/df['time_delta']
     df['server_cost'] = server_price* df['time_delta']
     df['server_cost_permin'] = server_price
+    df['profitability'] = df['quil_profit_permin'] - df['server_cost_permin']
+    cond1 = df['profitability'] > 0
+    cond2 = df['profitability'] <= 0
   
     # Generate Chart
     plt.figure(figsize=(12,6))
     fig, ax1 = plt.subplots(figsize=(12,6))
 
     # Primary axis
-    ax1.plot(df['time'], df['quil_earned_permin'], linestyle='-', marker='s', color='b', label='quil earned')
-    ax1.plot(df['time'], df['quil_profit_permin'], color='r', marker='o', label='quil profit')
-    ax1.plot(df['time'], df['server_cost_permin'], color='g', label='server cost')
+    ax1.plot(df['time'], df['quil_earned_permin'], linestyle='-', marker='s', color='orange', label='quil earned')
+    ax1.plot(df['time'][cond1], df['quil_profit_permin'][cond1], color='g', marker='o', label='quil profit')
+    ax1.plot(df['time'][cond2], df['quil_profit_permin'][cond2], color='r', marker='o', label='quil loss')
+    ax1.plot(df['time'], df['server_cost_permin'], color='b', label='server cost')
     ax1.set_xlabel('Time')
     ax1.set_ylabel('$ Earning/Cost per minute')
 
