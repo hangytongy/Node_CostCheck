@@ -7,13 +7,13 @@
   tasks:
 
     - name: Run the node-info command
-      shell: "cd ~/ceremonyclient/node && ./node-1.4.21.1-linux-amd64 -node-info"
+      shell: "cd ~/ceremonyclient/node && ./node-2.0.0.8-linux-amd64 -node-info"
       register: node_info_output
 
     - name: Parse the node-info output to extract Version and Unclaimed balance
       set_fact:
         version: "{{ node_info_output.stdout | regex_search('Version: (.+)', '\\1') }}"
-        unclaimed_balance: "{{ node_info_output.stdout | regex_search('Unclaimed balance: (.+)', '\\1')}}"
+        unclaimed_balance: "{{ node_info_output.stdout | regex_search('Owned balance: (.+)', '\\1')}}"
 
     - name: Display Version and Unclaimed Balance
       debug:
